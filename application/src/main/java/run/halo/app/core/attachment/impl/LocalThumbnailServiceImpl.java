@@ -38,13 +38,14 @@ import run.halo.app.core.attachment.LocalThumbnailService;
 import run.halo.app.core.attachment.ThumbnailGenerator;
 import run.halo.app.core.attachment.ThumbnailSigner;
 import run.halo.app.core.attachment.ThumbnailSize;
-import run.halo.app.core.extension.attachment.LocalThumbnail;
+import run.halo.app.core.attachment.extension.LocalThumbnail;
 import run.halo.app.extension.ListOptions;
 import run.halo.app.extension.ListResult;
 import run.halo.app.extension.Metadata;
 import run.halo.app.extension.PageRequestImpl;
 import run.halo.app.extension.ReactiveExtensionClient;
 import run.halo.app.infra.ExternalUrlSupplier;
+import run.halo.app.infra.exception.NotFoundException;
 
 @Slf4j
 @Component
@@ -76,7 +77,8 @@ public class LocalThumbnailServiceImpl implements LocalThumbnailService {
     @Override
     public Mono<URI> getOriginalImageUri(URI thumbnailUri) {
         return fetchThumbnail(thumbnailUri)
-            .map(local -> URI.create(local.getSpec().getImageUri()));
+            .map(local -> URI.create(local.getSpec().getImageUri()))
+            .switchIfEmpty(Mono.error(() -> new NotFoundException("Resource not found.")));
     }
 
     @Override

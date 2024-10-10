@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import QueryString from "qs";
 import {
   AnnotationSettingV1alpha1Api,
   AttachmentV1alpha1Api,
@@ -18,7 +19,6 @@ import {
   ExtensionPointDefinitionV1alpha1Api,
   GroupV1alpha1Api,
   IndicesV1alpha1ConsoleApi,
-  LoginApi,
   MenuItemV1alpha1Api,
   MenuV1alpha1Api,
   MenuV1alpha1PublicApi,
@@ -54,6 +54,7 @@ import {
   SnapshotV1alpha1Api,
   SnapshotV1alpha1UcApi,
   SubscriptionV1alpha1Api,
+  SystemConfigV1alpha1ConsoleApi,
   SystemV1alpha1ConsoleApi,
   SystemV1alpha1PublicApi,
   TagV1alpha1Api,
@@ -64,12 +65,14 @@ import {
   UserConnectionV1alpha1Api,
   UserV1alpha1Api,
   UserV1alpha1ConsoleApi,
-  UserV1alpha1PublicApi
 } from "../src";
 
 const defaultAxiosInstance = axios.create({
-  baseURL: "/",
+  baseURL: "",
   withCredentials: true,
+  paramsSerializer: (params) => {
+    return QueryString.stringify(params, { arrayFormat: "repeat" });
+  },
 });
 
 defaultAxiosInstance.defaults.headers.common["X-Requested-With"] =
@@ -276,7 +279,6 @@ function createConsoleApiClient(axiosInstance: AxiosInstance) {
       baseURL,
       axiosInstance
     ),
-    login: new LoginApi(undefined, baseURL, axiosInstance),
     storage: {
       attachment: new AttachmentV1alpha1ConsoleApi(
         undefined,
@@ -315,6 +317,13 @@ function createConsoleApiClient(axiosInstance: AxiosInstance) {
     },
     theme: {
       theme: new ThemeV1alpha1ConsoleApi(undefined, baseURL, axiosInstance),
+    },
+    configMap: {
+      system: new SystemConfigV1alpha1ConsoleApi(
+        undefined,
+        baseURL,
+        axiosInstance
+      ),
     },
   };
 }
@@ -373,11 +382,7 @@ function createUcApiClient(axiosInstance: AxiosInstance) {
         baseURL,
         axiosInstance
       ),
-      device: new DeviceV1alpha1UcApi(
-        undefined,
-        baseURL,
-        axiosInstance
-      ),
+      device: new DeviceV1alpha1UcApi(undefined, baseURL, axiosInstance),
     },
     notification: {
       notification: new NotificationV1alpha1UcApi(
@@ -423,7 +428,6 @@ function createPublicApiClient(axiosInstance: AxiosInstance) {
   return {
     menu: new MenuV1alpha1PublicApi(undefined, baseURL, axiosInstance),
     stats: new SystemV1alpha1PublicApi(undefined, baseURL, axiosInstance),
-    user: new UserV1alpha1PublicApi(undefined, baseURL, axiosInstance),
     content: {
       post: new PostV1alpha1PublicApi(undefined, baseURL, axiosInstance),
       comment: new CommentV1alpha1PublicApi(undefined, baseURL, axiosInstance),
@@ -448,6 +452,5 @@ export {
   createPublicApiClient,
   createUcApiClient,
   defaultPublicApiClient as publicApiClient,
-  defaultUcApiClient as ucApiClient
+  defaultUcApiClient as ucApiClient,
 };
-
