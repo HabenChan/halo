@@ -45,13 +45,10 @@ core:
     profile:
       aggregate_role: 聚合角色
   dashboard:
-    title: 仪表板
+    title: 仪表盘
     actions:
       setting: 设置
-      done: 完成
-      add_widget: 添加组件
     widgets:
-      modal_title: 小组件
       groups:
         post: 文章
         page: 页面
@@ -72,7 +69,7 @@ core:
           title: 通知
           empty:
             title: 当前没有未读的消息
-        quicklink:
+        quickaction:
           title: 快捷访问
           actions:
             user_center:
@@ -96,12 +93,42 @@ core:
               dialog_title: 刷新搜索引擎索引
               dialog_content: 此操作会对所有已发布的文章重新创建本地搜索引擎的索引。
               success_message: 刷新成功
+          config:
+            fields:
+              enabled_items:
+                label: 启用的功能
         user_stats:
           title: 用户
         comment_stats:
           title: 评论
         views_stats:
           title: 浏览量
+        pending_comments:
+          title: 新评论
+  dashboard_designer:
+    title: 编辑仪表盘
+    actions:
+      add_widget: 添加部件
+    widgets_modal:
+      title: 小部件
+    config_modal:
+      title: 部件配置
+    operations:
+      back:
+        title: 布局未保存
+        description: 当前编辑的布局还未保存，放弃后，当前布局将丢失，是否继续？
+        confirm_text: 放弃
+      change_breakpoint:
+        tips_not_saved: 请先保存当前布局
+      copy_from_layout:
+        button: 从其他布局复制
+      open_widgets_hub:
+        button: 小部件中心
+    breakpoints:
+      lg: 桌面端
+      md: 平板端（横向）
+      sm: 平板端
+      xs: 手机端
   post:
     title: 文章
     actions:
@@ -468,10 +495,16 @@ core:
         title: 确定要审核通过该评论的所有回复吗？
       delete_reply:
         title: 删除回复
-      approve_reply:
-        button: 审核通过
+      review:
+        button: 审核
       reply:
         button: 回复
+      approve:
+        button: 通过
+      reply_and_approve:
+        button: 回复并通过
+      cancel_approve:
+        button: 取消通过
     filters:
       status:
         items:
@@ -505,6 +538,25 @@ core:
       operations:
         submit:
           toast_success: 回复成功
+    text:
+      commented_on: 评论在
+      replied_below: 回复：
+    detail_modal:
+      fields:
+        owner: 评论者
+        creation_time: 评论时间
+        commented_on: 评论在
+        new_reply: 新回复
+        user_agent: 用户代理（UA）
+    comment_detail_modal:
+      title: 评论详情
+      fields:
+        content: 评论内容
+    reply_detail_modal:
+      title: 回复详情
+      fields:
+        original_comment: 原评论
+        content: 回复内容
   attachment:
     title: 附件库
     common:
@@ -1183,8 +1235,7 @@ core:
                 manual:
                   label: 如果无法扫描二维码，点击查看代替步骤
                   help: 使用以下代码手动配置验证器应用：
-              tips: >-
-                请妥善保管您的两步验证设备，如果设备丢失或损坏，你将无法登录系统。建议你在多个设备上安装验证器应用，或保存好密钥的备份，以防主要设备无法使用。
+              tips: 请妥善保管您的两步验证设备，如果设备丢失或损坏，你将无法登录系统。建议你在多个设备上安装验证器应用，或保存好密钥的备份，以防主要设备无法使用。
     pat:
       operations:
         delete:
@@ -1755,6 +1806,8 @@ core:
       tip: 提示
       warning: 警告
       system_protection: 系统保留
+      all: 全部
+      detail: 详情
     tooltips:
       unpublished_content_tip: 当前有内容已保存，但还未发布。
       publishing: 发布中
