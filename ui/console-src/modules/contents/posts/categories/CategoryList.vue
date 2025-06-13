@@ -64,7 +64,7 @@ async function handleUpdateInBatch() {
   <CategoryEditingModal v-if="creationModal" @close="creationModal = false" />
   <VPageHeader :title="$t('core.post_category.title')">
     <template #icon>
-      <IconBookRead class="mr-2 self-center" />
+      <IconBookRead />
     </template>
 
     <template #actions>
@@ -74,7 +74,7 @@ async function handleUpdateInBatch() {
         @click="creationModal = true"
       >
         <template #icon>
-          <IconAddCircle class="h-full w-full" />
+          <IconAddCircle />
         </template>
         {{ $t("core.common.buttons.new") }}
       </VButton>
@@ -116,7 +116,7 @@ async function handleUpdateInBatch() {
                 @click="creationModal = true"
               >
                 <template #icon>
-                  <IconAddCircle class="h-full w-full" />
+                  <IconAddCircle />
                 </template>
                 {{ $t("core.common.buttons.new") }}
               </VButton>

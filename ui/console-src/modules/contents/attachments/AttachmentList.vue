@@ -250,31 +250,29 @@ watch(
   />
   <VPageHeader :title="$t('core.attachment.title')">
     <template #icon>
-      <IconFolder class="mr-2 self-center" />
+      <IconFolder />
     </template>
     <template #actions>
-      <VSpace>
-        <VButton
-          v-permission="['system:attachments:manage']"
-          size="sm"
-          @click="policyVisible = true"
-        >
-          <template #icon>
-            <IconDatabase2Line class="h-full w-full" />
-          </template>
-          {{ $t("core.attachment.actions.storage_policies") }}
-        </VButton>
-        <VButton
-          v-permission="['system:attachments:manage']"
-          type="secondary"
-          @click="uploadVisible = true"
-        >
-          <template #icon>
-            <IconUpload class="h-full w-full" />
-          </template>
-          {{ $t("core.common.buttons.upload") }}
-        </VButton>
-      </VSpace>
+      <VButton
+        v-permission="['system:attachments:manage']"
+        size="sm"
+        @click="policyVisible = true"
+      >
+        <template #icon>
+          <IconDatabase2Line />
+        </template>
+        {{ $t("core.attachment.actions.storage_policies") }}
+      </VButton>
+      <VButton
+        v-permission="['system:attachments:manage']"
+        type="secondary"
+        @click="uploadVisible = true"
+      >
+        <template #icon>
+          <IconUpload />
+        </template>
+        {{ $t("core.common.buttons.upload") }}
+      </VButton>
     </template>
   </VPageHeader>
 
@@ -475,7 +473,7 @@ watch(
                     @click="uploadVisible = true"
                   >
                     <template #icon>
-                      <IconUpload class="h-full w-full" />
+                      <IconUpload />
                     </template>
                     {{ $t("core.attachment.empty.actions.upload") }}
                   </VButton>

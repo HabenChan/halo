@@ -3,7 +3,8 @@ import StatusDotField from "@/components/entity-fields/StatusDotField.vue";
 import HasPermission from "@/components/permission/HasPermission.vue";
 import PostContributorList from "@/components/user/PostContributorList.vue";
 import { postLabels } from "@/constants/labels";
-import { formatDatetime } from "@/utils/date";
+import { formatDatetime, relativeTimeTo } from "@/utils/date";
+import { generateThumbnailUrl } from "@/utils/thumbnail";
 import PostTag from "@console/modules/contents/posts/tags/components/PostTag.vue";
 import type { ListedPost } from "@halo-dev/api-client";
 import { ucApiClient } from "@halo-dev/api-client";
@@ -121,13 +122,22 @@ function handleDelete() {
 <template>
   <VEntity>
     <template #start>
+      <VEntityField v-if="post.post.spec.cover">
+        <template #description>
+          <div class="aspect-h-2 rounded-md overflow-hidden aspect-w-3 w-20">
+            <img
+              class="object-cover w-full h-full"
+              :src="generateThumbnailUrl(post.post.spec.cover, 's')"
+            />
+          </div>
+        </template>
+      </VEntityField>
       <VEntityField
         :title="post.post.spec.title"
         :route="{
           name: 'PostEditor',
           query: { name: post.post.metadata.name },
         }"
-        width="27rem"
       >
         <template #extra>
           <VSpace class="mt-1 sm:mt-0">
@@ -238,8 +248,11 @@ function handleDelete() {
       <VEntityField v-if="post.post.spec.publishTime">
         <template #description>
           <div class="inline-flex items-center space-x-2">
-            <span class="entity-field-description">
-              {{ formatDatetime(post.post.spec.publishTime) }}
+            <span
+              v-tooltip="formatDatetime(post.post.spec.publishTime)"
+              class="entity-field-description"
+            >
+              {{ relativeTimeTo(post.post.spec.publishTime) }}
             </span>
             <IconTimerLine
               v-if="

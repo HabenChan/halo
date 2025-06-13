@@ -17,12 +17,17 @@ import type {
 import type { AnyExtension } from "@halo-dev/richtext-editor";
 import type { Component, Ref } from "vue";
 import type { RouteRecordName, RouteRecordRaw } from "vue-router";
-import type { EditorProvider, PluginTab } from "..";
+import type {
+  DashboardWidgetDefinition,
+  DashboardWidgetQuickActionItem,
+  EditorProvider,
+  PluginTab,
+} from "..";
 import type { AttachmentSelectProvider } from "../states/attachment-selector";
 import type { FunctionalPage } from "../states/pages";
 
 export interface RouteRecordAppend {
-  parentName: RouteRecordName;
+  parentName: NonNullable<RouteRecordName>;
   route: RouteRecordRaw;
 }
 
@@ -89,6 +94,14 @@ export interface ExtensionPoint {
   "uc:user:profile:tabs:create"?: () =>
     | UserProfileTab[]
     | Promise<UserProfileTab[]>;
+
+  "console:dashboard:widgets:create"?: () =>
+    | DashboardWidgetDefinition[]
+    | Promise<DashboardWidgetDefinition[]>;
+
+  "console:dashboard:widgets:internal:quick-action:item:create"?: () =>
+    | DashboardWidgetQuickActionItem[]
+    | Promise<DashboardWidgetQuickActionItem[]>;
 }
 
 export interface PluginModule {
