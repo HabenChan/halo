@@ -246,7 +246,7 @@ function getMenuItemRefDisplayName(menuItem: MenuTreeItem) {
   />
   <VPageHeader :title="$t('core.menu.title')">
     <template #icon>
-      <IconListSettings class="mr-2 self-center" />
+      <IconListSettings />
     </template>
   </VPageHeader>
   <div class="m-0 md:m-4">
@@ -298,7 +298,7 @@ function getMenuItemRefDisplayName(menuItem: MenuTreeItem) {
                     @click="menuItemEditingModal = true"
                   >
                     <template #icon>
-                      <IconAddCircle class="h-full w-full" />
+                      <IconAddCircle />
                     </template>
                     {{ $t("core.common.buttons.new") }}
                   </VButton>
